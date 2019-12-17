@@ -1,0 +1,41 @@
+body {
+  background: rgb(0, 174, 255);
+}
+.container {
+  text-align: center;
+  border: 6px solid rgb(38, 0, 255);
+  width: 320px;
+  margin: 0 auto;
+  padding: 10px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.input {
+  margin-bottom: 13px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid rgb(47, 0, 255);
+}
+.btn {
+  border: 3px solid rgb(17, 0, 255);
+  background: transparent;
+  border-radius: 10px;
+}
+.btn:hover {
+  background: rgb(255, 255, 255);
+  color: rgb(47, 0, 255);
+}
+.inputTitle {
+  background: rgb(0, 174, 255);
+  border: none;
+  border-bottom: 2px solid blue;
+  margin-bottom: 4%;
+}
+.inputBody {
+  background: rgb(0, 174, 255);
+  border: none;
+  border-bottom: 2px solid blue;
+  margin-bottom: 3%;
+}
