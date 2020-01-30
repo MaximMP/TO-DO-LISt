@@ -26,7 +26,7 @@ const tasks = [
 
     dark: {
       "--background": "#3f3f3f",
-      "--text-color": "White"
+      "--text-color": "#3f3f3f"
     }
   };
 
