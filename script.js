@@ -8,7 +8,7 @@ const tasks = [
   {
     id: 2,
     title: "Выучить React",
-    text: "Ходить на курс, делать домашки читать документацию",
+    text: "Ходить на курс, делать домашки, читать документацию",
     completed: false
   }
 ];
@@ -17,6 +17,37 @@ const tasks = [
     acc[task.id] = task;
     return acc;
   }, {});
+
+  const themes = {
+    default: {
+      "--background": "white",
+      "--text-color": "#3f3f3f"
+    },
+
+    dark: {
+      "--background": "#3f3f3f",
+      "--text-color": "White"
+    }
+  };
+
+  const themeSelect = document.getElementById("themeSelect");
+  themeSelect.addEventListener("change", onThemeSelectHandler);
+  function onThemeSelectHandler() {
+    const selectedTheme = themeSelect.value;
+    const isConfirm = confirm("Are you sure?");
+    if (!isConfirm) return;
+    setTheme(selectedTheme);
+  }
+  function setTheme(name) {
+    console.log(name);
+    const selectedThemeOj = themes[name];
+    Object.entries(selectedThemeOj).forEach(([key, value]) => {
+      console.log(key, value);
+      document.documentElement.style.setProperty(key, value);
+      document.body.style.setProperty(key, value);
+    });
+  }
+
   function renderAllTasks(taskList) {
     const fragment = document.createDocumentFragment();
     Object.values(taskList).forEach(task => {
@@ -29,6 +60,7 @@ const tasks = [
   function listItem({ id, text, title }) {
     const li = document.createElement("li");
     li.classList.add("item");
+    li.setAttribute("data-task-id", id);
     const h3 = document.createElement("h3");
     h3.classList.add("title");
     h3.textContent = title;
@@ -38,9 +70,11 @@ const tasks = [
     p.textContent = text;
 
     const button = document.createElement("button");
-    button.textContent = "Delete task";
+    const i = document.createElement("i");
+    i.classList.add("fas");
+    i.classList.add("fa-trash-alt");
     button.classList.add("btn");
-
+    button.appendChild(i);
     li.appendChild(h3);
     li.appendChild(p);
     li.appendChild(button);
@@ -49,6 +83,8 @@ const tasks = [
   const form = document.querySelector(".form");
   const inputTitle = document.querySelector(".inputTitle");
   const inputBody = document.querySelector(".inputBody");
+  const list = document.querySelector(".list");
+
   function onFormSubmit(event) {
     event.preventDefault();
     const titleValue = inputTitle.value;
@@ -57,6 +93,7 @@ const tasks = [
     console.log(bodyValue);
     if (!bodyValue || !titleValue) {
       alert("Enter values");
+      return null;
     }
     const task = createNewTask(bodyValue, titleValue);
     const listItems = listItem(task);
@@ -76,5 +113,27 @@ const tasks = [
   form.addEventListener("submit", onFormSubmit);
   renderAllTasks(objectOfTasks);
 
-  console.log("Math.random", "task" + Math.random());
+  function deleteTask(id) {
+    const isConfirm = confirm(
+      "Вы точно хотите удалить << " + objectOfTasks[id].title + " >>?"
+    );
+    if (!isConfirm) return isConfirm;
+    delete objectOfTasks[id];
+    return isConfirm;
+  }
+
+  function onDeleteHandler(event) {
+    console.log(event.target);
+    if (event.target.classList.contains("btn")) {
+      console.log("delete button");
+      const parent = event.target.closest("[data-task-id]");
+      console.log("parent: ", parent);
+      const id = parent.dataset.taskId;
+      console.log("id", id);
+      const confirmed = deleteTask(id);
+      if (!confirmed) return;
+      parent.remove();
+    }
+  }
+  list.addEventListener("click", onDeleteHandler);
 })(tasks);
