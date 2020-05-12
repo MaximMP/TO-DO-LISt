@@ -3,16 +3,16 @@ const tasks = [
     id: 1,
     title: "Выучить JS",
     text: "Ходить на курс, делать домашки",
-    completed: false
+    completed: false,
   },
   {
     id: 2,
     title: "Выучить React",
     text: "Ходить на курс, делать домашки, читать документацию",
-    completed: false
-  }
+    completed: false,
+  },
 ];
-(function(arrTasks) {
+(function (arrTasks) {
   const objectOfTasks = arrTasks.reduce((acc, task) => {
     acc[task.id] = task;
     return acc;
@@ -21,13 +21,13 @@ const tasks = [
   const themes = {
     default: {
       "--background": "white",
-      "--text-color": "#3f3f3f"
+      "--text-color": "#3f3f3f",
     },
 
     dark: {
       "--background": "#3f3f3f",
-      "--text-color": "#3f3f3f"
-    }
+      "--text-color": "#3f3f3f",
+    },
   };
 
   const themeSelect = document.getElementById("themeSelect");
@@ -50,7 +50,7 @@ const tasks = [
 
   function renderAllTasks(taskList) {
     const fragment = document.createDocumentFragment();
-    Object.values(taskList).forEach(task => {
+    Object.values(taskList).forEach((task) => {
       const li = listItem(task);
       fragment.appendChild(li);
       const list = document.querySelector(".list");
@@ -69,15 +69,14 @@ const tasks = [
     p.classList.add("article");
     p.textContent = text;
 
-    const button = document.createElement("button");
     const i = document.createElement("i");
     i.classList.add("fas");
     i.classList.add("fa-trash-alt");
-    button.classList.add("btn");
-    button.appendChild(i);
+
     li.appendChild(h3);
     li.appendChild(p);
-    li.appendChild(button);
+
+    li.appendChild(i);
     return li;
   }
   const form = document.querySelector(".form");
@@ -105,7 +104,7 @@ const tasks = [
       title: title,
       text: text,
       completed: false,
-      id: "task" + Math.random()
+      id: "task" + Math.random(),
     };
     objectOfTasks[newTask.id] = newTask;
     return { ...newTask };
@@ -124,7 +123,7 @@ const tasks = [
 
   function onDeleteHandler(event) {
     console.log(event.target);
-    if (event.target.classList.contains("btn")) {
+    if (event.target.classList.contains("fas")) {
       console.log("delete button");
       const parent = event.target.closest("[data-task-id]");
       console.log("parent: ", parent);
